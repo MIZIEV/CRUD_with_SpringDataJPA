@@ -7,5 +7,13 @@
 <body>
 <h3>People list</h3>
 
+<div th:each="person : ${people}">
+    <a th:href="@{/people/{id}(id=${person.getId()})}"
+            th:text="${person.getId()+') '+person.fullName+', '+person.getDateOfBirth()}">peron</a>
+</div>
+
+<hr/>
+<a th:href="@{/people/new}">Add new person</a>
+
 </body>
 </html>
