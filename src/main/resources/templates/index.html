@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Second project</h2>
+<h3>WIth Hibernate & Spring Data JPA</h3>
+
+<form th:method="GET" th:action="@{people/}">
+    <input type="submit" value="People page">
+</form>
+
+<form th:method="GET" th:action="@{books/}">
+    <input type="submit" value="Books page">
+</form>
+
+</body>
+</html>
