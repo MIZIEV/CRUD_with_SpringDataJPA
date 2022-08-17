@@ -36,4 +36,14 @@ public class PersonService {
     public Person getConcretePerson(int id){
         return personRepositories.getById(id);
     }
+
+    @Transactional(readOnly = false)
+    public void deleteConcretePerson(int id){
+        personRepositories.deleteById(id);
+    }
+
+    @Transactional(readOnly = false)
+    public Person updatePerson(Person updatedPerson){
+        return personRepositories.save(updatedPerson);
+    }
 }
