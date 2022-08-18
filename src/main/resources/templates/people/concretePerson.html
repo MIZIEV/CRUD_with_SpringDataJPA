@@ -7,6 +7,12 @@
 <body>
 <p th:text="${person.getId()+') '+person.getFullName()+', '+person.getDateOfBirth()}">person</p>
 
+<hr/>
+<div th:if="${person.getBookList()==null}">
+    <p>Customer haven't any book</p>
+</div>
+<hr/>
+
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
     <input type="submit" value="Delete this person">
 </form>

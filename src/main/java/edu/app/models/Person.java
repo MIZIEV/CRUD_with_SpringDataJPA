@@ -5,8 +5,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.awt.print.Book;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Person")
@@ -30,6 +32,9 @@ public class Person {
     @Column(name = "time_of_creation")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeOfCreation;
+
+    @Transient
+    private List<Book> bookList;
 
     public Person() {
     }
@@ -64,6 +69,14 @@ public class Person {
 
     public void setTimeOfCreation(Date timeOfCreation) {
         this.timeOfCreation = timeOfCreation;
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
     }
 
     @Override
