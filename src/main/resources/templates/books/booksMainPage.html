@@ -5,7 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-<h3>Books list</h3>
+<h3>Books list:</h3>
+<div th:each="book : ${books}">
+    <a th:text="${book.getId()+') '+book.getName()+', '+book.getDateOfPublishing()}">book</a>
+</div>
 
+<form th:method="GET" th:action="@{/books/new}">
+    <input type="submit" value="Add new book">
+</form>
 </body>
 </html>
