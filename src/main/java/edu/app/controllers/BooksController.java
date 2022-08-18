@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,6 +25,18 @@ public class BooksController {
     public String getBooksMainPage(Model model) {
         model.addAttribute("books", bookService.getAllBooks());
         return "books/booksMainPage";
+    }
+
+    @GetMapping("/{id}")
+    public String getConcretePage(@PathVariable("id") int id, Model model) {
+        model.addAttribute("book", bookService.getConcreteBook(id));
+        return "books/concreteBook";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteConcreteBook(@PathVariable("id") int id) {
+        bookService.deleteConcreteBook(id);
+        return "redirect:/books/";
     }
 
     @GetMapping("/new")
