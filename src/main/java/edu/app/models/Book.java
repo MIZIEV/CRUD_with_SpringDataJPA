@@ -27,7 +27,8 @@ public class Book {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeOfCreation;
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "person_id",referencedColumnName = "person_id")
     private Person owner;
 
     public Book() {

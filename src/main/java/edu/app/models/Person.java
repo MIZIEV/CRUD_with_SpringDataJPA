@@ -5,8 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.awt.print.Book;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +31,8 @@ public class Person {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeOfCreation;
 
-    @Transient
+
+    @OneToMany(mappedBy = "owner")
     private List<Book> bookList;
 
     public Person() {
