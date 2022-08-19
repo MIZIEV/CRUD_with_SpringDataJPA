@@ -1,5 +1,6 @@
 package edu.app.services;
 
+import edu.app.models.Book;
 import edu.app.models.Person;
 import edu.app.repositories.PersonRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,10 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class PersonService {
 
-    private final EntityManager entityManager;
     private final PersonRepositories personRepositories;
 
     @Autowired
-    public PersonService(EntityManager entityManager, PersonRepositories personRepositories) {
-        this.entityManager = entityManager;
+    public PersonService(PersonRepositories personRepositories) {
         this.personRepositories = personRepositories;
     }
 
@@ -45,5 +44,9 @@ public class PersonService {
     @Transactional(readOnly = false)
     public Person updatePerson(Person updatedPerson){
         return personRepositories.save(updatedPerson);
+    }
+
+    public List<Book> getAllBook(int id){
+        return personRepositories.findById(id).map(Person::getBookList).orElse(null);
     }
 }

@@ -8,9 +8,17 @@
 <p th:text="${person.getId()+') '+person.getFullName()+', '+person.getDateOfBirth()}">person</p>
 
 <hr/>
-<div th:if="${person.getBookList()==null}">
+<div th:if="${books.isEmpty()}">
     <p>Customer haven't any book</p>
 </div>
+
+<div th:if="${!books.isEmpty()}">
+    <p>Customer has next books: </p>
+    <div th:each="book : ${books}">
+        <p th:text="${book.getId()+') '+book.getName()+', '+book.getDateOfPublishing()}">book</p>
+    </div>
+</div>
+
 <hr/>
 
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">

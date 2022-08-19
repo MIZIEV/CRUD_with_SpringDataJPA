@@ -29,6 +29,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String getConcretePersonPage(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", personService.getConcretePerson(id));
+        model.addAttribute("books", personService.getAllBook(id));
         return "people/concretePerson";
     }
 
