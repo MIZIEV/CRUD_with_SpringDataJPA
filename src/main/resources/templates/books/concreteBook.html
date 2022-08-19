@@ -8,7 +8,11 @@
 
 <p th:text="${book.getId()+') '+book.getName()+', '+book.getDateOfPublishing()}">book</p>
 
-<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}" >
+<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+    <input type="submit" value="Edit book data">
+</form>
+
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
     <input type="submit" value="Delete this book">
 </form>
 

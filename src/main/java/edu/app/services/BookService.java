@@ -35,7 +35,12 @@ public class BookService {
     }
 
     @Transactional(readOnly = false)
-    public void deleteConcreteBook(int id){
+    public void deleteConcreteBook(int id) {
         bookRepositories.deleteById(id);
+    }
+
+    @Transactional(readOnly = false)
+    public void updateBook(Book updatedBook) {
+        bookRepositories.save(updatedBook);
     }
 }

@@ -53,4 +53,19 @@ public class BooksController {
         bookService.addNewBook(book);
         return "redirect:/books/";
     }
+
+    @GetMapping("/{id}/edit")
+    public String getEditBookPage(@PathVariable("id") int id, Model model) {
+        model.addAttribute("book", bookService.getConcreteBook(id));
+        return "books/editBook";
+    }
+    @PatchMapping("/{id}")
+    public String updateBook(@PathVariable("id") int id,
+                             @ModelAttribute("book") @Valid Book book, BindingResult error){
+        if(error.hasErrors()){
+            return "books/editBook";
+        }
+        bookService.updateBook(book);
+        return "redirect:/books/";
+    }
 }
