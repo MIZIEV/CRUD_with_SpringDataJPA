@@ -1,7 +1,9 @@
 package edu.app.controllers;
 
 import edu.app.models.Book;
+import edu.app.models.Person;
 import edu.app.services.BookService;
+import edu.app.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +17,12 @@ import javax.validation.Valid;
 public class BooksController {
 
     private final BookService bookService;
+    private final PersonService personService;
 
     @Autowired
-    public BooksController(BookService bookService) {
+    public BooksController(BookService bookService, PersonService personService) {
         this.bookService = bookService;
+        this.personService = personService;
     }
 
     @GetMapping("/")
@@ -28,8 +32,18 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public String getConcretePage(@PathVariable("id") int id, Model model) {
+    public String getConcretePage(@PathVariable("id") int id, @ModelAttribute("person") Person person,
+                                  Model model) {
         model.addAttribute("book", bookService.getConcreteBook(id));
+
+        Person owner = bookService.getBookOwner(id);
+
+        if (owner != null) {
+            model.addAttribute("owner", owner);
+        } else {
+            model.addAttribute("people", personService.getAllPeople());
+        }
+
         return "books/concreteBook";
     }
 
@@ -59,13 +73,26 @@ public class BooksController {
         model.addAttribute("book", bookService.getConcreteBook(id));
         return "books/editBook";
     }
+
     @PatchMapping("/{id}")
     public String updateBook(@PathVariable("id") int id,
-                             @ModelAttribute("book") @Valid Book book, BindingResult error){
-        if(error.hasErrors()){
+                             @ModelAttribute("book") @Valid Book book, BindingResult error) {
+        if (error.hasErrors()) {
             return "books/editBook";
         }
         bookService.updateBook(book);
         return "redirect:/books/";
+    }
+
+    @PatchMapping("/{id}/addOwner")
+    public String addOwner(@PathVariable("id") int id, @ModelAttribute("person") Person selectedPerson) {
+        bookService.setNewOwner(id, selectedPerson);
+        return "redirect:/books/" + id;
+    }
+
+    @PatchMapping("/{id}/deleteOwner")
+    public String deleteOwner(@PathVariable("id") int id) {
+        bookService.deleteOwner(id);
+        return "redirect:/books/" + id;
     }
 }

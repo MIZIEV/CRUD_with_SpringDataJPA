@@ -8,6 +8,29 @@
 
 <p th:text="${book.getId()+') '+book.getName()+', '+book.getDateOfPublishing()}">book</p>
 
+<hr/>
+
+<div th:if="${owner}">
+    <span>This book now in: </span><span th:text="${owner.getFullName()}">owner</span>
+    <form th:method="PATCH" th:action="@{/books/{id}/deleteOwner(id=${book.getId()})}">
+        <input type="submit" value="Delete owner">
+    </form>
+</div>
+
+<div th:if="${people}">
+    <label>This book is free. Who want to get it?</label>
+    <form th:method="PATCH" th:action="@{/books/{id}/addOwner(id=${book.getId()})}">
+        <label for="person">Chose the customer: </label>
+        <select th:object="${person}" th:field="*{id}" id="person">
+            <option th:each="person : ${people}" th:value="${person.getId()}"
+                    th:text="${person.getFullName()}"></option>
+        </select>
+        <input type="submit" th:value="Accept">
+    </form>
+</div>
+
+<hr/>
+
 <form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
     <input type="submit" value="Edit book data">
 </form>
