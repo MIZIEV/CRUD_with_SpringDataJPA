@@ -1,8 +1,7 @@
 package edu.app.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -22,10 +21,9 @@ public class Person {
     @Size(min = 2, max = 100, message = "Full name size must be between 2 and 100 characters")
     private String fullName;
 
-    @Column(name = "date_of_birth")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yy/MM/dd")
-    private Date dateOfBirth;
+    @Column(name = "age")
+    @Min(value = 0,message = "Age mustn't be smaller than 0" )
+    private int age;
 
     @Column(name = "time_of_creation")
     @Temporal(TemporalType.TIMESTAMP)
@@ -54,12 +52,12 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public int getAge() {
+        return age;
     }
 
-    public void setDateOfBirth(Date dataOfBirth) {
-        this.dateOfBirth = dataOfBirth;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Date getTimeOfCreation() {
@@ -80,6 +78,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return id + ") " + fullName + ", " + dateOfBirth + ", " + timeOfCreation;
+        return id + ") " + fullName + ", " + age + ", " + timeOfCreation;
     }
 }

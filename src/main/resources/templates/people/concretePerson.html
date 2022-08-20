@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<p th:text="${person.getId()+') '+person.getFullName()+', '+person.getDateOfBirth()}">person</p>
+<p th:text="${person.getId()+') '+person.getFullName()+', '+person.getAge()}">person</p>
 
 <hr/>
 <div th:if="${books.isEmpty()}">

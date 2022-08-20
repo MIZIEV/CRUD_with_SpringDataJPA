@@ -13,9 +13,9 @@
     <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">error</div>
     <br/>
 
-    <label for="date">Enter new date of birth: </label>
-    <input type="text" th:field="*{dateOfBirth}" id="date">
-    <div th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">error</div>
+    <label for="date">Enter new age: </label>
+    <input type="text" th:field="*{age}" id="date">
+    <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}">error</div>
     <br/>
     <hr/>
 
