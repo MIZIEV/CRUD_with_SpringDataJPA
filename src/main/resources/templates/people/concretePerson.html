@@ -15,7 +15,7 @@
 <div th:if="${!books.isEmpty()}">
     <p>Customer has next books: </p>
     <div th:each="book : ${books}">
-        <p th:text="${book.getId()+') '+book.getName()+', '+book.getDateOfPublishing()}">book</p>
+        <p th:text="${book.getId()+') '+book.getTitle()+', '+book.getDateOfPublishing()}">book</p>
     </div>
 </div>
 

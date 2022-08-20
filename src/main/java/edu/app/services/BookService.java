@@ -4,6 +4,8 @@ import edu.app.models.Book;
 import edu.app.models.Person;
 import edu.app.repositories.BookRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +30,21 @@ public class BookService {
         bookRepositories.save(newBook);
     }
 
-    public List<Book> getAllBooks() {
-        return bookRepositories.findAll();
+    public List<Book> getAllBooks(boolean sort) {
+
+        if (sort) {
+            return bookRepositories.findAll(Sort.by("yearOfPublished"));
+        } else {
+            return bookRepositories.findAll();
+        }
+    }
+
+    public List<Book> findWithPagination(Integer page, Integer booksPerPage, boolean sort) {
+        if (sort) {
+            return bookRepositories.findAll(PageRequest.of(page, booksPerPage, Sort.by("yearOfPublished"))).getContent();
+        } else {
+            return bookRepositories.findAll(PageRequest.of(page, booksPerPage)).getContent();
+        }
     }
 
     public Book getConcreteBook(int id) {
