@@ -8,14 +8,19 @@
 
 <form th:method="PUT" th:action="@{/books/}" th:object="${book}">
 
-    <label for="name">Enter book name: </label>
-    <input type="text" th:field="*{name}" id="name">
-    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error</div>
+    <label for="name">Enter book title: </label>
+    <input type="text" th:field="*{title}" id="name">
+    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}">error</div>
     <br/>
 
-    <label for="date">Enter date of published in format (yy/mm/dd): </label>
-    <input type="text" th:field="*{dateOfPublishing}" id="date">
-    <div th:if="${#fields.hasErrors('dateOfPublishing')}" th:errors="*{dateOfPublishing}">error</div>
+    <label for="author">Enter book author: </label>
+    <input type="text" th:field="*{author}" id="author">
+    <div th:if="${#fields.hasErrors('author')}" th:errors="*{author}">error</div>
+    <br/>
+
+    <label for="date">Enter year of published: </label>
+    <input type="text" th:field="*{yearOfPublished}" id="date">
+    <div th:if="${#fields.hasErrors('yearOfPublished')}" th:errors="*{yearOfPublished}">error</div>
     <br/>
     <hr/>
 

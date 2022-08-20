@@ -14,14 +14,17 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "book_name")
+    @Column(name = "title")
     @NotEmpty(message = "This field mustn't be empty")
     @Size(min = 2, max = 100, message = "Name size must be between 2 and 100 characters")
-    private String name;
+    private String title;
 
-    @Column(name = "date_of_published")
-    @Temporal(TemporalType.DATE)
-    private Date dateOfPublishing;
+    @Column(name = "author")
+    @NotEmpty(message = "This field mustn't be empty.")
+    private String author;
+
+    @Column(name = "year_of_published")
+    private int yearOfPublished;
 
     @Column(name = "time_of_creation")
     @Temporal(TemporalType.TIMESTAMP)
@@ -34,6 +37,14 @@ public class Book {
     public Book() {
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public int getId() {
         return id;
     }
@@ -42,20 +53,20 @@ public class Book {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String name) {
+        this.title = name;
     }
 
-    public Date getDateOfPublishing() {
-        return dateOfPublishing;
+    public int getYearOfPublished() {
+        return yearOfPublished;
     }
 
-    public void setDateOfPublishing(Date dateOfPublishing) {
-        this.dateOfPublishing = dateOfPublishing;
+    public void setYearOfPublished(int yearOfPublished) {
+        this.yearOfPublished = yearOfPublished;
     }
 
     public Date getTimeOfCreation() {
@@ -76,6 +87,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return id + ") " + name + ", " + dateOfPublishing;
+        return id + ") " + title + ", "+author+", " + yearOfPublished;
     }
 }

@@ -8,8 +8,10 @@
 <h3>Books list:</h3>
 <div th:each="book : ${books}">
     <a th:href="@{/books/{id}(id=${book.getId()})}"
-       th:text="${book.getId()+') '+book.getName()+', '+book.getDateOfPublishing()}">book</a>
+       th:text="${book.getId()+') '+book.getTitle()+', '+book.getAuthor()+', '+book.getYearOfPublished()}">book</a>
 </div>
+<br/>
+<hr/>
 
 <form th:method="GET" th:action="@{/books/new}">
     <input type="submit" value="Add new book">
