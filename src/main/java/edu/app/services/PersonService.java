@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,6 +27,10 @@ public class PersonService {
     public void addNewPerson(Person newPerson) {
         newPerson.setTimeOfCreation(new Date());
         personRepositories.save(newPerson);
+    }
+
+    public Optional<Person> getPersonByFullName(String fullName){
+        return personRepositories.findByFullName(fullName);
     }
 
     public List<Person> getAllPeople(){

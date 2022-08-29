@@ -3,12 +3,15 @@ package edu.app.services;
 import edu.app.models.Book;
 import edu.app.models.Person;
 import edu.app.repositories.BookRepositories;
+import edu.app.repositories.PersonRepositories;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +21,12 @@ import java.util.Optional;
 public class BookService {
 
     private final BookRepositories bookRepositories;
+    private final PersonRepositories personRepositories;
 
     @Autowired
-    public BookService(BookRepositories bookRepositories) {
+    public BookService(BookRepositories bookRepositories, PersonRepositories personRepositories) {
         this.bookRepositories = bookRepositories;
+        this.personRepositories = personRepositories;
     }
 
     @Transactional(readOnly = false)
@@ -47,6 +52,27 @@ public class BookService {
         }
     }
 
+    public List<Book> getBooksByPersonId(int id) {
+        Optional<Person> person = personRepositories.findById(id);
+
+        if (person.isPresent()) {
+            Hibernate.initialize(person.get().getBookList());
+
+            person.get().getBookList().forEach(book -> {
+                long diffInMiles = Math.abs(book.getTimeOfCreation().getTime() - new Date().getTime());
+                if (diffInMiles > 864000000) {
+                    book.setExpired(true);
+                }
+            });
+            return person.get().getBookList();
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    public List<Book> searchByTitle(String title){
+        return bookRepositories.findByTitleStartingWith(title);
+    }
     public Book getConcreteBook(int id) {
         return bookRepositories.getById(id);
     }
@@ -69,6 +95,7 @@ public class BookService {
     public void setNewOwner(int id, Person newOwner) {
         Book book = bookRepositories.findById(id).get();
         book.setOwner(newOwner);
+        book.setTimeOfCreation(null);
         bookRepositories.save(book);
     }
 
@@ -76,6 +103,7 @@ public class BookService {
     public void deleteOwner(int id) {
         Book book = bookRepositories.findById(id).get();
         book.setOwner(null);
+        book.setTimeOfCreation(null);
         bookRepositories.save(book);
     }
 }

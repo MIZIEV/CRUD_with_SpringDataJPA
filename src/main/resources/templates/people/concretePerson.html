@@ -14,9 +14,14 @@
 
 <div th:if="${!books.isEmpty()}">
     <p>Customer has next books: </p>
-    <div th:each="book : ${books}">
-        <p th:text="${book.getId()+') '+book.getTitle()+', '+book.getDateOfPublishing()}">book</p>
-    </div>
+    <table th:each="book : ${books}">
+        <tr>
+            <td>
+        <span th:text="${book.getId()+') '+book.getTitle()+', '+book.yearOfPublished}"
+              th:style="${book.isExpired()} ? 'color:red' : 'color:black'">book</span>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <hr/>

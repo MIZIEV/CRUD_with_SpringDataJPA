@@ -34,6 +34,9 @@ public class Book {
     @JoinColumn(name = "person_id",referencedColumnName = "person_id")
     private Person owner;
 
+    @Transient
+    private boolean expired;
+
     public Book() {
     }
 
@@ -83,6 +86,14 @@ public class Book {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 
     @Override

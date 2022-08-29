@@ -92,6 +92,18 @@ public class BooksController {
         return "redirect:/books/";
     }
 
+    @GetMapping("/search")
+    public String getSearchPage() {
+        return "/books/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearchBooks(Model model, @RequestParam("query") String query) {
+        model.addAttribute("books", bookService.searchByTitle(query));
+        System.out.println("result is ....." + model.toString());
+        return "/books/search";
+    }
+
     @PatchMapping("/{id}/addOwner")
     public String addOwner(@PathVariable("id") int id, @ModelAttribute("person") Person selectedPerson) {
         bookService.setNewOwner(id, selectedPerson);
